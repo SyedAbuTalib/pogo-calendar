@@ -1,0 +1,32 @@
+# Which Pokémon GO events to keep in your calendars.
+# Source: the volunteer-run "GO Local Events" Google Calendar
+# (pogoeventcalendar@gmail.com). Edit this file, push, and the calendars
+# rebuild within a minute.
+
+source_url = "https://calendar.google.com/calendar/ical/14cd31cd8270906853006c13d85bec3df06eb555202b460cf1f1eb26d45643b7%40group.calendar.google.com/public/basic.ics"
+
+calendar_name = "Syed's Pokémon GO"
+
+# The time zone shown in the calendar names and used by calendar apps for
+# display. Event times are passed through from the source unchanged; the
+# source's "UTC-7" calendar already follows Pacific time, DST included.
+timezone = "America/Los_Angeles"
+
+# Events longer than this go into a separate "long events" calendar
+# (Halloween, Minior Showers, weekend Shadow Raids...), so you can hide them
+# in Google Calendar and turn them on when you need them.
+long_event_hours = 24
+
+# Always put events whose title matches these regexes in the long calendar.
+long_name_patterns = [
+  "^Max Monday",
+  "^Max Battle Boss Change",
+]
+
+# Drop events whose title matches any of these regexes (case-insensitive).
+# Run `python build.py --list` to see upcoming titles.
+exclude_name_patterns = [
+]
+
+# How many days of past events to keep.
+keep_past_days = 30
