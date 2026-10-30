@@ -99,6 +99,16 @@ def main():
             print(f"{mark}  {str(e['DTSTART'].dt)[:16]}  {e['SUMMARY']}")
         return
 
+    # An empty calendar almost always means the source feed or the filters
+    # broke; fail the run (GitHub emails on failure) instead of publishing it.
+    errors = []
+    if not short:
+        errors.append("error: no events for pokemon-go.ics (short events)")
+    if not long:
+        errors.append("error: no events for pokemon-go-long.ics (long events)")
+    if errors:
+        sys.exit("\n".join(errors + ["refusing to publish empty calendars"]))
+
     args.out_dir.mkdir(parents=True, exist_ok=True)
     for filename, cal_name, cal_events in [
         ("pokemon-go.ics", f"{name} ({tz.key})", short),
