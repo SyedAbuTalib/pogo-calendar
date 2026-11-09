@@ -9,6 +9,6 @@ Filtered Pokémon GO event calendars you can subscribe to. They rebuild daily on
   - `https://<user>.github.io/pogo-calendar/pokemon-go-long.ics`: multi-day events (Halloween, Minior Showers, weekend Shadow Raids, etc.)
 - Events longer than `long_event_hours` in `config.toml` go into the long calendar.
 
-The source is the "GO Local Events (UTC-7)" calendar. Despite its name, its event times follow Pacific time including daylight saving, so they're passed through unchanged. `timezone` in `config.toml` only sets the display zone and the calendar names.
+The source is the "GO Local Events (UTC-7)" calendar, which uses fixed `UTC-7` (`America/Hermosillo`, no DST) year-round. `build.py` re-pins event wall-clock times to `timezone` in `config.toml` so times stay right across daylight saving changes.
 
 Event data comes from the volunteer-run "GO Local Events" Google Calendar (pogoeventcalendar@gmail.com).

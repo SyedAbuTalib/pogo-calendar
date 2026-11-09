@@ -19,6 +19,15 @@ def fetch_calendar(url):
         return icalendar.Calendar.from_ical(resp.read())
 
 
+def repin(event, prop, source_tz, target_tz):
+    if prop not in event:
+        return
+    dt = event[prop].dt
+    if isinstance(dt, datetime):
+        event.pop(prop)
+        event.add(prop, dt.astimezone(source_tz).replace(tzinfo=target_tz))
+
+
 def duration_hours(event):
     start = event["DTSTART"].dt
     if "DTEND" in event:
@@ -77,11 +86,14 @@ def main():
     cutoff = datetime.now(timezone.utc) - timedelta(days=config.get("keep_past_days", 30))
 
     source = fetch_calendar(config["source_url"])
+    source_tz = ZoneInfo(str(source.get("X-WR-TIMEZONE", "America/Hermosillo")))
     short, long, dropped = [], [], []
     for e in source.walk("VEVENT"):
         end = end_time(e)
         if end is not None and end < cutoff:
             continue
+        repin(e, "DTSTART", source_tz, tz)
+        repin(e, "DTEND", source_tz, tz)
         # Markers like "GO Battle Thursday" have no end; Google would show
         # them as 1 hour, so make them zero-length like the source calendar.
         if "DTEND" not in e and "DURATION" not in e and isinstance(e["DTSTART"].dt, datetime):

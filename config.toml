@@ -7,9 +7,9 @@ source_url = "https://calendar.google.com/calendar/ical/14cd31cd8270906853006c13
 
 calendar_name = "Syed's Pokémon GO"
 
-# The time zone shown in the calendar names and used by calendar apps for
-# display. Event times are passed through from the source unchanged; the
-# source's "UTC-7" calendar already follows Pacific time, DST included.
+# The time zone to pin local event times to (with DST) and show in calendar
+# names. The source "UTC-7" calendar uses fixed UTC-7 year-round, so build.py
+# re-pins its wall-clock times into this zone.
 timezone = "America/Los_Angeles"
 
 # Events longer than this go into a separate "long events" calendar
